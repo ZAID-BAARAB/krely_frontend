@@ -86,7 +86,7 @@ import RoomImagesSlider from "@/components/ui/RoomImagesSlider";
             <Pressable onPress={() => router.back()} className="">
               <Entypo name="chevron-with-circle-left" size={32} color="#3f3f3f" />
             </Pressable>
-            <Text className="text-2xl font-bold text-g60">Room Details</Text>
+            <Text className="text-2xl font-bold text-g60">{room.name}</Text>
             <Pressable className="shareOpenButton">
               <AntDesign name="sharealt" size={24} color="#3f3f3f" />
             </Pressable>
@@ -117,12 +117,18 @@ import RoomImagesSlider from "@/components/ui/RoomImagesSlider";
                 <Text className="text-xl font-bold text-g60">{room.name}</Text>
                 <View className="flex-row justify-start items-center mt-2">
                   <View className="flex-row justify-start items-center gap-2">
-                    <AntDesign name="star" size={16} color="#d9d9d9" />
+                    <AntDesign name="star" size={16} color="#FF8000" />
                     <Text className="text-g60 font-semibold text-xs">
                       4.5 <Text className="font-normal text-g40">(64)</Text>
                     </Text>
                   </View>
-                  <View className="leading-none h-1.5 w-1.5 rounded-full bg-g60 mx-2"></View>
+                  <MaterialCommunityIcons
+                    name="map-marker"
+                    size={16}
+                    color="#3f3f3f"
+                    style={{ marginHorizontal: 8 }}
+                  />
+                  {/* <View className="leading-none h-1.5 w-1.5 rounded-full bg-g60 mx-2"></View> */}
                   <Text className="text-g60 font-semibold text-xs">
                     {room.city}, {room.address}
                   </Text>

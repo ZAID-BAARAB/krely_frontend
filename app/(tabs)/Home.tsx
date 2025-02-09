@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   Pressable,
@@ -45,7 +46,13 @@ const HomePage = () => {
     fetchTopRooms();
   }, []);
 
-  if (loading) return <Text>Loading...</Text>;
+      if (loading) {
+        return (
+          <View style={styles.loader}>
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        );
+      }
   if (error) return <Text>{error}</Text>;
 
   return (
@@ -139,4 +146,21 @@ const HomePage = () => {
 
 export default HomePage;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  loader: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 16,
+    textAlign: "center",
+  },
+});
