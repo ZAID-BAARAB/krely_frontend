@@ -23,6 +23,7 @@ import {
   import ReviewItem from "@/components/ui/ReviewItem";
   import { GalleryItem, Room, RoomService } from "@/app/services/roomService";
 import RoomImagesSlider from "@/components/ui/RoomImagesSlider";
+import RoomLocation from "@/components/RoomLocation";
   
   const RoomDetails = () => {
     const { roomId } = useLocalSearchParams(); // Access roomId from route params
@@ -42,7 +43,9 @@ import RoomImagesSlider from "@/components/ui/RoomImagesSlider";
           setRoom(data);
 
           const galleryData = await RoomService.getGalleryItemsByRoomId(Number(roomId));
-          setGalleryItems(galleryData);
+          if (galleryData) {
+            setGalleryItems(galleryData);
+          }
         } catch (err) {
           setError("Failed to fetch room details or gallery items");
           console.error(err);
@@ -190,6 +193,13 @@ import RoomImagesSlider from "@/components/ui/RoomImagesSlider";
               <Text className="text-g60 font-semibold text-base">Description</Text>
               <Text className="text-sm text-g50 pt-2">{room.description}</Text>
             </View>
+
+            {/* Room Location */}
+            <RoomLocation
+              latitude={room.latitude}
+              longitude={room.longitude}
+              address={`${room.city}, ${room.address}`}
+            />
   
             {/* Reviews Section (Kept from ProductDetails) */}
             <View className="pt-6">

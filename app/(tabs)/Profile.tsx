@@ -49,7 +49,7 @@ const Profile = () => {
               </View>
               <View className="">
                 <Text className="text-xl font-semibold text-white">
-                  Albert Flores
+                  Albert Floressss
                 </Text>
                 <Text className="text-sm text-white">example@gmail.com</Text>
               </View>
@@ -81,6 +81,19 @@ const Profile = () => {
                 <Feather name="chevron-right" size={24} color="#3f3f3f" />
               </Pressable>
             ))}
+            <Pressable onPress={() => router.push("/(screens)/Dashboard")}
+              className="flex-row justify-between items-center pb-4 border-b border-dashed border-g30 pt-4"
+
+            > 
+              <View className="flex-row justify-start items-center gap-4">  
+
+                <View className=" rounded-full border border-g30 !leading-none w-10 h-10 flex justify-center items-center bg-g20">
+                  <AntDesign name="appstore-o" size={20} color="#3f3f3f" /> 
+                </View>
+                <Text className="text-g60 font-medium text-base">Dashboard</Text>
+              </View>
+              <Feather name="chevron-right" size={24} color="#3f3f3f" />
+            </Pressable>  
             <Pressable
               onPress={() => setLogoutModal(true)}
               className="flex-row justify-between items-center  pt-4"

@@ -25,13 +25,10 @@ const SignInPage = () => {
       Alert.alert("Error", "Please enter both email and password.");
       return;
     }
-
     setIsLoading(true);
-
     try {
       const { access_token, refresh_token } = await authenticateUser(email, password);
       console.log("from SignIn comp : Login successful! Tokens:", access_token, refresh_token);
-
       // Fetch the current user's details using the whoAmI method
       const user = await whoAmI(access_token);
         // Check if the user's email is verified
@@ -55,6 +52,11 @@ const SignInPage = () => {
       setIsLoading(false);
     }
   };
+
+  const handleContinueAsGuest = () => {
+    router.replace("/Home");
+  };
+
 
   return (
     <SafeAreaView>
@@ -103,6 +105,18 @@ const SignInPage = () => {
               <Text className="text-center text-white text-base font-semibold">
                 {isLoading ? "Signing In..." : "Sign In"}
               </Text>
+          </Pressable>
+        </View>
+
+        {/* Continue as Guest Button */}
+        <View className="px-4 pt-4">
+          <Pressable
+            onPress={handleContinueAsGuest}
+            className="w-full bg-g20 py-3 rounded-lg border border-g30"
+          >
+            <Text className="text-center text-g60 text-base font-semibold">
+              Continue as Guest
+            </Text>
           </Pressable>
         </View>
 

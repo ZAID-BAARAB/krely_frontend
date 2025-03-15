@@ -1,4 +1,6 @@
 import {
+  ActivityIndicator,
+  Keyboard,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -12,17 +14,40 @@ import { router } from "expo-router";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { productItems } from "@/constants/data";
 import ProductItem from "@/components/ui/ProductItem";
+import { Room, RoomService } from "../services/roomService";
+import RoomItem from "@/components/ui/RoomItem";
 
 const popolarSearch = ["Hoodie for Men", "Nike", "Polo Shirt", "Adidas Shoes"];
 
 const Search = () => {
   const [value, setValue] = useState("");
+  const [searchResults, setSearchResults] = useState<Room[]>([]);
+  const [searching, setSearching] = useState(false);
+
+  const handleSearch = async () => {
+    Keyboard.dismiss();
+    try {
+      setSearching(true);
+      if (value.trim()) {
+        const results = await RoomService.searchRoomByCity(value);
+        setSearchResults(results);
+        console.log(searchResults)
+      }
+
+    } catch (error) {
+      console.error("Search error:", error);
+      setSearchResults([]);
+    } finally {
+      setSearching(false);
+      // Hide spinner after search
+    }
+  };
+  
   return (
     <SafeAreaView>
       <ScrollView className="">
         {/* Search Section Start */}
         <Pressable
-          onPress={() => router.push("/Search" as any)}
           className="pt-6 px-4 flex-row justify-between items-center"
         >
           <View className="w-[83%] border border-g30 px-4 py-3 rounded-xl">
@@ -33,7 +58,8 @@ const Search = () => {
                   value={value}
                   onChangeText={(e) => setValue(e)}
                   placeholder="Search Here"
-                  className="text-g50 px-2"
+                  className="text-g50 px-3 rounded-xl w-[80%] "
+                  //onSubmitEditing={handleSearch}
                 />
               </View>
               <Pressable onPress={() => router.push("/CameraViewPage" as any)}>
@@ -41,9 +67,16 @@ const Search = () => {
               </Pressable>
             </View>
           </View>
-          <View className="flex-1 bg-g60 justify-center items-center ml-3 py-4 rounded-xl">
-            <AntDesign name="search1" size={20} color="white" />
-          </View>
+          <Pressable
+            onPress={handleSearch}
+            className="flex-1 bg-g60 justify-center items-center ml-3 py-4 rounded-xl"
+          >
+            {searching ? (
+              <ActivityIndicator size="small" color="white" />
+            ) : (
+              <AntDesign name="search1" size={20} color="white" />
+            )}
+          </Pressable>
         </Pressable>
         {/* Search Section End */}
 
@@ -79,8 +112,8 @@ const Search = () => {
 
         {/* Products List Start */}
         <View className="px-4 flex flex-wrap flex-row justify-between pb-10">
-          {productItems.slice(2, 4).map(({ id, ...props }) => (
-            <ProductItem key={`${id}`} {...props} />
+          {searchResults.slice(0, 10).map((room) => (
+              <RoomItem key={room.roomId} room={room} />
           ))}
         </View>
         {/* Products List End */}

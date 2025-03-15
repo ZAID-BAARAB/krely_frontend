@@ -35,7 +35,7 @@ const HomePage = () => {
       try {
         const data = await RoomService.getTop10Rooms();
         setRooms(data);
-        console.log(data);
+        //console.log(data);
       } catch (err) {
         setError('Failed to fetch rooms');
       } finally {
@@ -60,7 +60,7 @@ const HomePage = () => {
       <ScrollView className="pb-6 pt-6 bg-white">
         <View className="px-4 flex-row w-full justify-between items-center">
           <Image source={userImg} className="w-14 h-14 rounded-full" />
-          <Text className="text-3xl font-bold text-g60">ClickMart</Text>
+          <Text className="text-3xl font-bold text-g60">Krely</Text>
           <MaterialCommunityIcons name="bell-badge" size={28} color="#696969" />
         </View>
         {/* Search Section Start */}
